@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <title>WORLD: US</title>
+
+  <style>
+    html, body {
+      margin: 0;
+      width: 100%;
+      height: 100%;
+      overflow: hidden;
+      background: #9ed8ff;
+    }
+
+    #game {
+      width: 100%;
+      height: 100%;
+    }
+
+    #error {
+      position: fixed;
+      top: 20px;
+      left: 20px;
+      right: 20px;
+      padding: 20px;
+      background: #111;
+      color: #ff6b6b;
+      font-family: monospace;
+      font-size: 16px;
+      z-index: 9999;
+      white-space: pre-wrap;
+      display: none;
+    }
+  </style>
+
+  <!-- Tell the browser where "three" lives -->
+  <script type="importmap">
+  {
+    "imports": {
+      "three": "https://cdn.jsdelivr.net/npm/three@0.180.0/build/three.module.js"
+    }
+  }
+  </script>
+</head>
+
+<body>
+
+  <div id="game"></div>
+  <div id="error"></div>
+
+  <script>
+    window.addEventListener("error", function(event) {
+      const error = document.getElementById("error");
+
+      error.style.display = "block";
+
+      error.textContent =
+        "JAVASCRIPT ERROR:\n\n" +
+        event.message;
+    });
+
+    window.addEventListener("unhandledrejection", function(event) {
+      const error = document.getElementById("error");
+
+      error.style.display = "block";
+
+      error.textContent =
+        "JAVASCRIPT ERROR:\n\n" +
+        event.reason;
+    });
+  </script>
+
+  <script type="module">
+    import("./script.js").catch(function(error) {
+
+      const box = document.getElementById("error");
+
+      box.style.display = "block";
+
+      box.textContent =
+        "COULD NOT LOAD script.js\n\n" +
+        error.message +
+        "\n\nMake sure the file is named exactly:\nscript.js";
+    });
+  </script>
+
+</body>
+</html>
